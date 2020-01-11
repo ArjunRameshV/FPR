@@ -10,9 +10,16 @@ while(True):
 			print("Decimal to Floating point ")
 			num=float(input("Enter a Decimal Number :-"))
 			d=bin(int(num)).split('b')[1]
-			f=int(str(num).split('.')[1])
-			print(num,",",d,f)
-
+			t=int(str(num).split('.')[1])
+			if(len(d)>99):
+				print("too big input for half precision")
+			else:
+				s='';l=len(str(t))
+				for i in range(100):
+					t*=2
+					s+=str(t//(10**l))
+					t=t%(10**l)
+				print(num,d+"."+s)
 		elif(a==2):
 			print("Floating point to Decimal")			
 			num=input("Enter a binary half precision (s e m)format Number :-")
