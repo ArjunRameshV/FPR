@@ -19,41 +19,58 @@ while(True):
 			else:
 				s=''
 				l=len(str(t))
-				for i in range(13):
+				for i in range(10+5):
 					t*=2
 					s+=str(t//(10**l))
 					t=t%(10**l)
 				num1=len(d)
-				# print(d+"."+s)
+				print("Number ",d+"."+s)
 				d=d+s
 				num2=d.find("1")+1
 				t=num1-num2
+				print(t)
 				# print(d[:num2]+"."+d[num2:],t)
 				d=d[d.find("1")+1:]
 				x=bin(15+t).split("b")[1] #Half Precision (max exp of bin size 5)
 				if(len(x)<5):
-					ans=sign+" 0"+x+" "+d[2:12]
+					ans=sign+" 0"+x+" "+d[:10]
 				else:
-					ans=sign+" "+x+" "+d[2:12]
+					ans=sign+" "+x+" "+d[:10]
 				print(ans)
 
 		elif(a==2):
-			print("Floating point to Decimal")			
-			num=input("Enter a binary half precision (s e m)format Number : ")
-			# num=num.split(" ")
-			if(len(num)==16):#half precision
-				print("Correct")
-				sign=num[0]
-				exp=num[1:6]
-				man=num[7:]		
-				print(sign,exp,man)
-				exp=int(exp,2)
-				exp=exp-15 #half Precision
-				print(sign,exp,man)
-				ans=''
-				if(sign=='1'):
+			print("Floating point to Decimal")
+			print("Enter a binary half precision (s e m)format ")			
+			num=input("Number : ")
+			print(num)
+			if(len(num)==16 or len(num)== 18): #half precision
+				num=num.replace(" ","")
+				ans,fract='',''
+				if(num[0]=='1'):
 					ans="-"
-				temp=int('1'+man[0])
+				exp=num[1:6]
+				man="1"+num[6:]
+				exp=1+int(exp,2)-15 #half Precision
+				print(man[0]+"."+man[1:],exp,"actual ",exp-1)
+				if(exp<0):
+					for i in range(abs(exp)):
+						man="0"+man
+					ans=ans+"0"
+					fract=man
+				else:
+					i=0
+					while(i<exp):
+						ans=ans+man[i]
+						i+=1
+					man=man[i:]
+					fract=man
+				n=0
+				p=1
+				for i in range(len(fract)):
+					n=n+int(fract[i])*(1/(2**p))
+					p+=1
+				print(ans+","+fract)
+				print(int(ans,2)+n)
 			else:
 				print("Wrong format")
 		elif(a==3):
@@ -61,5 +78,6 @@ while(True):
 			break
 		else:
 			print("Wrong input")
+		# os.system("clear")
 	except(ValueError):
 		print("Unknown Format")
