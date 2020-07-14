@@ -1,2 +1,3 @@
 # FPR convetor
-converting half Precision number to decimal and vice versa.
+
+Converting half Precision numbers to decimal format and vice versa.
